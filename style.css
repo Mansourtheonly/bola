@@ -1,89 +1,217 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.player-list, .pitch {
-    width: 45%;
-    margin: 10px;
-    padding: 15px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.player-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.player-item {
-    padding: 8px;
-    margin: 4px 0;
-    display: flex;
-    align-items: center;
-    background-color: #cce7ff;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.player-number {
-    display: inline-block;
-    width: 100px;
-    height: 24px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 4px;
-    text-align: center;
-    margin-right: 8px;
-    font-weight: bold;
-    font-size: 0.85em;
-}
-
-
-.player-item:hover .player-number {
-    transform: scale(1.2);
-    background-color: #ff6347;
-}
-
-.half-field {
-    position: relative;
-    width: 500px;
-    height: 400px;
-    background-color: #4CAF50;
-    border-radius: 10px;
-    padding: 20px;
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-}
-
-.position {
-    width: 100%;
-    height: 100%;
     background-color: #fff;
-    border: 2px dashed #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #555;
-    cursor: pointer;
+  }
+  
+  .container {
+    width: 850px;
+    height: 550px;
+    margin: 50px auto;
+    background-color: #539A46;
+    position: relative;
+  }
+  
+  .container .line {
+    width: 850px;
+    height: 550px;
+    border: 3px solid #ffffff;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
 }
 
-/* Style adjustments for player list hover */
-#players li:hover {
-    background-color: #e0e0e0;
+  
+  .container .line::before {
+    border: 5px solid #539A46;
+    content: "";
+    position: absolute;
+    left: -9px;
+    top: -9px;
+    right: -6px;
+    bottom: -6px;
+  }
+  
+  .container .half {
+    width: 425px;
+    height: 550px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-right: 4px solid #fff;
+    z-index: 200;
+  }
+  
+  .container .panelty {
+    width: 110px;
+    height: 220px;
+    border: 3px solid #ffffff;
+    position: absolute;
+    background-color: #539A46;
+    z-index: 220;
+  }
+  
+  .container .panelty.left {
+    left: 3px;
+    top: 150px;
+    border-left: none;
+  }
+  
+  .container .panelty.left::after {
+    border: 3px solid #ffffff;
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 45px;
+    right: 55px;
+    bottom: 45px;
+    border-left: none;
+  }
+  
+  .container .panelty.right {
+    right: 0px;
+    top: 150px;
+    border-right: none;
+  }
+  
+  .container .panelty.right::after {
+    border: 3px solid #ffffff;
+    content: "";
+    position: absolute;
+    left: 55px;
+    top: 45px;
+    right: 0px;
+    bottom: 45px;
+    border-right: none;
+  }
+  
+  .container .p-spot.left::after {
+    content: "\2022";
+    position: absolute;
+    color: #fff;
+    font-size: 35px;
+    top: 238px;
+    left: 80px;
+    z-index: 300;
+  }
+  
+  .container .p-spot.right::after {
+    content: "\2022";
+    position: absolute;
+    color: #fff;
+    font-size: 35px;
+    top: 238px;
+    right: 80px;
+    z-index: 300;
+  }
+  
+  .container .center {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border: 3px solid #ffffff;
+    left: 359px;
+    top: 193px;
+    border-radius: 50%;
+  }
+  
+  .container .center::after {
+    background-color: #fff;
+    border: 5px solid #fff;
+    content: "";
+    position: absolute;
+    left: 55px;
+    top: 55px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  
+  .container .p-place {
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    z-index: 210;
+    border: 3px solid transparent;
+  }
+  
+  .container .p-place.left {
+    border-color: #fff;
+    left: 0;
+    top: 193px;
+  }
+  
+  .container .p-place.right {
+    border-color: #fff;
+    right: 0px;
+    top: 193px;
+  }
+  
+  .player {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 300;
+}
+  
+  .player .remove-player {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+
+
+  .player.goalkeeper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px;
+    cursor: default;
+    background-color: red; /* Contrasting color for visibility */
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 300;
+}
+
+.player-draggable {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border: 1px solid #666;
+    cursor: move;
+}
+.goalkeeper-area {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 3px solid #000;
+    top: 225px;
+    right: 30px;
+    border-radius: 50%;
+    z-index: 200;
 }
