@@ -11,21 +11,20 @@ container.addEventListener("drop", event => {
         return;
     }
     const playerData = JSON.parse(event.dataTransfer.getData("text/plain"));
-    const goalkeeperArea = document.querySelector('.goalkeeper-area');
-    const rect = goalkeeperArea.getBoundingClientRect();
+    const penaltyRight = document.querySelector('.panelty.right');
+    const rect = penaltyRight.getBoundingClientRect();
     const dropX = event.clientX;
     const dropY = event.clientY;
     if (dropX >= rect.left && dropX <= rect.right && dropY >= rect.top && dropY <= rect.bottom) {
-        // Place as goalkeeper
-        placeGoalkeeper(playerData);
+        // Place as goalkeeper in the right penalty area
+        placeGoalkeeper(playerData, penaltyRight);
     } else {
         // Place as field player
         placeFieldPlayer(event, playerData);
     }
     document.getElementById(playerData.id).style.display = 'none';
 });
-
-function placeGoalkeeper(player) {
+function placeGoalkeeper(player, penaltyArea) {
     // Remove any existing goalkeeper
     const existingGoalkeeper = container.querySelector('.goalkeeper');
     if (existingGoalkeeper) {
@@ -35,11 +34,13 @@ function placeGoalkeeper(player) {
     const goalkeeper = document.createElement('div');
     goalkeeper.className = 'player goalkeeper';
     goalkeeper.textContent = player.name;
-    goalkeeper.style.left = goalkeeperArea.offsetLeft + 'px';
-    goalkeeper.style.top = goalkeeperArea.offsetTop + 'px';
-    goalkeeper.style.width = goalkeeperArea.offsetWidth + 'px';
-    goalkeeper.style.height = goalkeeperArea.offsetHeight + 'px';
-    goalkeeper.style.lineHeight = goalkeeper.offsetHeight + 'px';
+    // Position the goalkeeper at the center of the penalty area
+    const penaltyRect = penaltyArea.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const left = penaltyRect.left - containerRect.left + (penaltyRect.width / 2 - goalkeeper.offsetWidth / 2);
+    const top = penaltyRect.top - containerRect.top + (penaltyRect.height / 2 - goalkeeper.offsetHeight / 2);
+    goalkeeper.style.left = left + 'px';
+    goalkeeper.style.top = top + 'px';
     container.appendChild(goalkeeper);
     // Prevent goalkeeper from being draggable
     goalkeeper.draggable = false;
@@ -54,7 +55,6 @@ function placeGoalkeeper(player) {
     });
     goalkeeper.appendChild(removeBtn);
 }
-
 function placeFieldPlayer(event, playerData) {
     const playerElement = document.createElement("div");
     playerElement.className = "player field-player";
@@ -80,15 +80,12 @@ function placeFieldPlayer(event, playerData) {
     playerElement.appendChild(removeBtn);
 }
 
-fetch('./players.json') // Use './players.json' to ensure it points to the correct file
+fetch('players.json')
     .then(response => response.json())
     .then(players => {
         players.forEach(player => {
             createPlayerElement(player);
         });
-    })
-    .catch(error => {
-        console.error('Error loading players:', error);
     });
 
 function createPlayerElement(player) {
