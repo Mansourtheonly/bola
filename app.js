@@ -80,12 +80,15 @@ function placeFieldPlayer(event, playerData) {
     playerElement.appendChild(removeBtn);
 }
 
-fetch('players.json')
+fetch('./players.json') // Use './players.json' to ensure it points to the correct file
     .then(response => response.json())
     .then(players => {
         players.forEach(player => {
             createPlayerElement(player);
         });
+    })
+    .catch(error => {
+        console.error('Error loading players:', error);
     });
 
 function createPlayerElement(player) {
